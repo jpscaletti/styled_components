@@ -1,32 +1,42 @@
-from .constants import colors, fonts
-from .manager import Component
+from styled_components import Component, Styles
+
+
+class colors:
+    back = "#fff"
+    front = "#ff1010"
+
+
+class fonts:
+    default = '"Fira Sans", sans-serif'
+
+
+css = Styles()
 
 
 class Hint(Component):
 
-    def __init__(self, content, action, onAction):
-        self.content = content
+    def __init__(self, text, action):
+        self.text = text
         self.action = action
-        self.onAction = onAction
 
-        self.div_styles = self.css(f"""
+        self.s_wrapper = css(f"""
             background-color: {colors.back};
             opacity: 0.5;
             border-radius: 3px;
             display: flex;
             justify-content: space-between;
             padding: 10px;
-        """)
+        """, "HintWrapper")
 
-        self.span_styles = self.css(f"""
+        self.s_span = css(f"""
             height: 16px;
             color: {colors.front};
             font-family: {fonts.default};
             font-size: 12px;
             line-height: 16px;
-        """)
+        """, "HintHelp")
 
-        self.button_styles = self.css(f"""
+        self.s_button = css(f"""
             height: 14px;
             color: {colors.front};
             font-family: {fonts.default};
@@ -37,14 +47,24 @@ class Hint(Component):
             border: none;
             display: inline-flex;
             cursor: pointer;
-            """)
+
+            @media screen and (max-width: 640px) {{
+                font-size: 10px;
+            }}
+            """, "HintButton")
 
     def render(self):
         return f"""
-        <div class="{self.div_styles}">
-            <span class="{self.span_styles}">{self.text}</span>
-            <button class="{self.button_styles}" onClick={self.onAction}>
+        <div class="{self.s_wrapper}">
+            <span class="{self.s_span}">{self.text}</span>
+            <button class="{self.s_button}">
                 {self.action}
             </button>
         </div>
         """
+
+
+hint = Hint(text="Click the button", action="Be happy")
+print(hint)
+print("-" * 80)
+print(css.save_styles())

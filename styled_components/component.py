@@ -28,4 +28,4 @@ class Component(object):
 
     def _jinja_render(self, template_src):
         template = jinja_env.from_string(template_src)
-        template.render()
+        return template.render()

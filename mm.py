@@ -19,6 +19,7 @@ data = {
     "minimal_python": 3.6,
     "install_requires": [
         "jinja2 ~= 2.10",
+        "libsass ~= 1.13",
     ],
     "testing_requires": [
         "pytest",
@@ -37,8 +38,8 @@ def do_the_thing():
     import hecto
 
     hecto.copy(
-        # "gh:jpscaletti/mastermold.git",
-        "../mastermold",  # Path to the local copy of Master Mold
+        "gh:jpscaletti/mastermold.git",
+        # "../mastermold",  # Path to the local copy of Master Mold
         ".",
         data=data,
         force=False,
