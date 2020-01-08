@@ -18,14 +18,25 @@ jinja_env = SandboxedEnvironment(**DEFAULT_ENV_OPTIONS)
 
 class Component(object):
 
+    def template(self):
+        return None
+
     def __str__(self):
-        src = self._get_template_src()
-        return self._jinja_render(src)
+        return self.render()
 
     def _get_template_src(self):
-        src = (self.render() or "").strip("\n")
+        src = (self.template() or "").strip("\n")
         return textwrap.dedent(src)
 
     def _jinja_render(self, template_src):
+        props = {
+            key: value
+            for key, value in self.__dict__.items()
+            if not key.startswith("_")
+        }
         template = jinja_env.from_string(template_src)
-        return template.render()
+        return template.render(**props)
+
+    def render(self, **kwargs):
+        src = self._get_template_src()
+        return self._jinja_render(src)

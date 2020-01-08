@@ -20,18 +20,22 @@ class Hint(Component):
         self.action = action
 
         self.s_wrapper = css(f"""
+            font-family: {fonts.default};
             background-color: {colors.back};
             opacity: 0.5;
             border-radius: 3px;
             display: flex;
             justify-content: space-between;
             padding: 10px;
+
+            @media screen and (max-width: 640px) {{
+                font-size: 10px;
+            }}
         """, "HintWrapper")
 
         self.s_span = css(f"""
             height: 16px;
             color: {colors.front};
-            font-family: {fonts.default};
             font-size: 12px;
             line-height: 16px;
         """, "HintHelp")
@@ -39,7 +43,6 @@ class Hint(Component):
         self.s_button = css(f"""
             height: 14px;
             color: {colors.front};
-            font-family: {fonts.default};
             font-size: 12px;
             font-weight: bold;
             line-height: 14px;
@@ -47,24 +50,20 @@ class Hint(Component):
             border: none;
             display: inline-flex;
             cursor: pointer;
-
-            @media screen and (max-width: 640px) {{
-                font-size: 10px;
-            }}
             """, "HintButton")
 
-    def render(self):
-        return f"""
-        <div class="{self.s_wrapper}">
-            <span class="{self.s_span}">{self.text}</span>
-            <button class="{self.s_button}">
-                {self.action}
+    def template(self):
+        return """
+        <div class="{{ s_wrapper }}">
+            <span class="{{ s_span }}">{{ text }}</span>
+            <button class="{{ s_button }}">
+                {{ action }}
             </button>
         </div>
         """
 
 
 hint = Hint(text="Click the button", action="Be happy")
-print(hint)
+print(hint.render())
 print("-" * 80)
-print(css.save_styles())
+print(css.render())

@@ -19,7 +19,7 @@ data = {
     "minimal_python": 3.6,
     "install_requires": [
         "jinja2 ~= 2.10",
-        "libsass ~= 1.13",
+        "libsass ~= 0.19",
     ],
     "testing_requires": [
         "pytest",
